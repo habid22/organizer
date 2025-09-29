@@ -5,6 +5,42 @@ Configuration settings for the Downloads Organizer application.
 from pydantic_settings import BaseSettings
 from typing import Optional
 import os
+from pathlib import Path
+
+def get_downloads_folder() -> str:
+    """
+    Cross-platform downloads folder detection.
+    
+    Returns:
+        str: Path to the downloads folder
+    """
+    # Try environment variable first
+    if os.getenv('DOWNLOADS_PATH'):
+        return os.path.expanduser(os.getenv('DOWNLOADS_PATH'))
+    
+    # Try platform-specific defaults
+    if os.name == 'nt':  # Windows
+        # Try to get the actual Downloads folder from Windows
+        try:
+            import ctypes
+            from ctypes import wintypes
+            
+            # Get the user's profile directory
+            CSIDL_PROFILE = 40
+            buf = ctypes.create_unicode_buffer(wintypes.MAX_PATH)
+            ctypes.windll.shell32.SHGetFolderPathW(None, CSIDL_PROFILE, None, 0, buf)
+            profile_path = buf.value
+            
+            # Append Downloads folder
+            downloads_path = os.path.join(profile_path, "Downloads")
+            if os.path.exists(downloads_path):
+                return downloads_path
+        except (ImportError, OSError, AttributeError):
+            # Fallback to expanduser if Windows API fails
+            pass
+    
+    # Cross-platform fallback
+    return os.path.expanduser("~/Downloads")
 
 class Settings(BaseSettings):
     """Application settings"""
@@ -16,7 +52,7 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
     
     # File monitoring
-    downloads_path: str = r"C:\Users\hassa\Downloads"
+    downloads_path: str = get_downloads_folder()
     watch_recursive: bool = True
     
     # File organization

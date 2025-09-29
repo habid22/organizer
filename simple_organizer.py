@@ -12,7 +12,11 @@ import json
 
 class SimpleOrganizer:
     def __init__(self, downloads_path=None):
-        self.downloads_path = downloads_path or os.path.expanduser("~/Downloads")
+        if downloads_path:
+            self.downloads_path = downloads_path
+        else:
+            # Use cross-platform detection
+            self.downloads_path = os.path.expanduser("~/Downloads")
         self.organized_path = os.path.join(self.downloads_path, "Organized")
         
         # Create organized folder structure

@@ -13,7 +13,12 @@ class SimpleOrganizerService:
     """Simple file organizer service that actually works"""
     
     def __init__(self, downloads_path: str = None):
-        self.downloads_path = downloads_path or r"C:\Users\hassa\Downloads"
+        if downloads_path:
+            self.downloads_path = downloads_path
+        else:
+            # Use cross-platform detection
+            import os
+            self.downloads_path = os.path.expanduser("~/Downloads")
         self.organized_path = os.path.join(self.downloads_path, "Organized")
         
         # File categories
