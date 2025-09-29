@@ -1,5 +1,11 @@
 FROM python:3.11-slim
 
+# Install system dependencies for python-magic
+RUN apt-get update && apt-get install -y \
+    libmagic1 \
+    libmagic-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /app
 
