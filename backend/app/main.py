@@ -40,6 +40,11 @@ app.include_router(settings.router, prefix="/api/settings", tags=["settings"])
 async def health_check():
     return {"status": "healthy", "message": "Downloads Organizer API is running"}
 
+# Simple health check for Railway
+@app.get("/health")
+async def simple_health_check():
+    return {"status": "ok"}
+
 # Root endpoint
 @app.get("/")
 async def root():
