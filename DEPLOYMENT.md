@@ -21,21 +21,13 @@
 Add these environment variables in Railway dashboard:
 
 ```
-DATABASE_URL=sqlite:///./downloads_organizer.db
-REDIS_URL=redis://redis:6379/0
 DOWNLOADS_PATH=/app/downloads
 SECRET_KEY=your-production-secret-key-change-this
 DEBUG=False
 ENVIRONMENT=production
 ```
 
-### Step 3: Add Redis Service
-
-1. **In Railway dashboard**, click "Add Service" → "Database" → "Redis"
-2. **Connect to your backend** service
-3. **Update REDIS_URL** to the provided Redis connection string
-
-### Step 4: Deploy Frontend to Vercel
+### Step 3: Deploy Frontend to Vercel
 
 1. **Go to Vercel.com** and sign in with GitHub
 2. **Import your repository**
@@ -45,7 +37,7 @@ ENVIRONMENT=production
    - **Build Command**: `npm run build`
    - **Output Directory**: `.next`
 
-### Step 5: Environment Variables for Frontend
+### Step 4: Environment Variables for Frontend
 
 In Vercel dashboard, add:
 
@@ -54,7 +46,7 @@ API_URL=https://your-railway-app.railway.app
 NEXT_PUBLIC_API_URL=https://your-railway-app.railway.app
 ```
 
-### Step 6: Update CORS Settings
+### Step 5: Update CORS Settings
 
 In your Railway backend, add this environment variable:
 
@@ -82,7 +74,6 @@ CORS_ORIGINS=https://your-vercel-app.vercel.app,https://your-railway-app.railway
 
 ### Common Issues:
 - **CORS errors**: Update CORS_ORIGINS environment variable
-- **Database issues**: Check DATABASE_URL is correct
 - **File access**: Ensure DOWNLOADS_PATH is accessible
 - **Build failures**: Check build logs in Railway dashboard
 
