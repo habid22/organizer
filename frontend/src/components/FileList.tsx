@@ -152,14 +152,6 @@ export default function FileList() {
                     <span className="text-xs text-gray-500">
                       {new Date(file.created).toLocaleDateString()}
                     </span>
-                    <div className="flex space-x-2">
-                      <button className="text-xs text-primary-600 hover:text-primary-800">
-                        Rename
-                      </button>
-                      <button className="text-xs text-red-600 hover:text-red-800">
-                        Delete
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
