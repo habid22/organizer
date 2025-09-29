@@ -2,13 +2,10 @@
 API routes for application settings and configuration.
 """
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException
 from typing import List, Optional
 from pydantic import BaseModel
 
-from app.core.database import get_db
-from app.models.organization_rule import OrganizationRule
 from app.core.config import settings
 
 router = APIRouter()

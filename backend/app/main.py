@@ -8,7 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
-from app.api import files, dashboard, settings
+from app.api import files, dashboard
+from app.api.settings_simple import router as settings_router
 from app.core.config import settings as app_settings
 # No database needed - using simple file operations
 
@@ -33,7 +34,7 @@ app.add_middleware(
 # Include API routes
 app.include_router(files.router, prefix="/api/files", tags=["files"])
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["dashboard"])
-app.include_router(settings.router, prefix="/api/settings", tags=["settings"])
+app.include_router(settings_router, prefix="/api/settings", tags=["settings"])
 
 # Health check endpoint
 @app.get("/api/health")
